@@ -1,3 +1,4 @@
+/*
 /////////////////////////////////
 /// Frequency Counters - This pattern uses objects or sets to collect values/frequences of values
 
@@ -220,3 +221,60 @@ function factorial(num) {
   return num * factorial(num - 1);
 }
 // console.log(factorial(4));
+*/
+
+/////////////////////////////////
+// Searching Algorithm
+
+// Linear Search Exercise
+// Write a function called linearSearch which accepts an array and a value, and returns the index at which the value exists. If the value does not exist in the array, return -1.
+
+// Don't use indexOf to implement this function!
+
+function linearSearch(arr, val) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] === val) return i;
+  }
+  return -1;
+}
+console.log(linearSearch([24, 56, 1, 2], 1));
+// Binary Search Exercise
+// Write a function called binarySearch which accepts a sorted array and a value and returns the index at which the value exists. Otherwise, return -1.
+
+function binarySearch(arr, elem) {
+  var start = 0;
+  var end = arr.length - 1;
+  var middle = Math.floor((start + end) / 2);
+  console.log(start, middle, end);
+  while (arr[middle] !== elem) {
+    if (elem < arr[middle]) {
+      end = middle - 1;
+    } else {
+      start = middle + 1;
+    }
+    middle = Math.floor((start + end) / 2);
+  }
+  console.log(start, middle, end);
+  if (arr[middle] == elem) {
+    return middle;
+  }
+  return -1;
+}
+// console.log(binarySearch([2, 5, 6, 9, 13, 15, 15, 28], 15));
+
+// Naive String Search
+function naiveSearch(long, short) {
+  var count = 0;
+  for (var i = 0; i < long.length; i++) {
+    for (var j = 0; j < short.length; j++) {
+      if (short[j] !== long[i + j]) {
+        break;
+      }
+      if (j === short.length - 1) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+console.log(naiveSearch("loire loled", "lol"));
