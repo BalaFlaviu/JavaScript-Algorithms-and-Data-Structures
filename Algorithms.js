@@ -278,3 +278,46 @@ function naiveSearch(long, short) {
   return count;
 }
 console.log(naiveSearch("loire loled", "lol"));
+
+/////////////////////////////////
+// Introduction to Sorting Algorithms
+
+// Telling JavaScript how to sort
+
+function numberCompare(num1, num2) {
+  return num1 - num2;
+}
+console.log([6, 4, 15, 10].sort(numberCompare));
+
+function compareByLen(str1, str2) {
+  return str1.length - str2.length;
+}
+console.log(
+  ["Steele", "Colt", "Data Structures", "Algorithms"].sort(compareByLen)
+);
+
+// Bubble sort - A sorting algorithm where the largest values bubble up to the top
+// Example
+function swap(arr, idx1, idx2) {
+  var temp = arr[idx1];
+  arr[idx1] = arr[idx2];
+  arr[idx2] = temp;
+}
+// First example
+function bubbleSort(arr) {
+  var noSwaps;
+  for (var i = arr.length; i > 0; i--) {
+    noSwaps = true;
+    for (var j = 0; j < i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        var temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+        noSwaps = false;
+      }
+    }
+    if (noSwaps) break;
+  }
+  return arr;
+}
+console.log(bubbleSort([37, 45, 29, 8]));
