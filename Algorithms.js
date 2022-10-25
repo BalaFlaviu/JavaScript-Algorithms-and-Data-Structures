@@ -237,7 +237,7 @@ function linearSearch(arr, val) {
   }
   return -1;
 }
-console.log(linearSearch([24, 56, 1, 2], 1));
+// console.log(linearSearch([24, 56, 1, 2], 1));
 // Binary Search Exercise
 // Write a function called binarySearch which accepts a sorted array and a value and returns the index at which the value exists. Otherwise, return -1.
 
@@ -277,7 +277,7 @@ function naiveSearch(long, short) {
   }
   return count;
 }
-console.log(naiveSearch("loire loled", "lol"));
+// console.log(naiveSearch("loire loled", "lol"));
 
 /////////////////////////////////
 // Introduction to Sorting Algorithms
@@ -296,7 +296,8 @@ console.log(
   ["Steele", "Colt", "Data Structures", "Algorithms"].sort(compareByLen)
 );
 
-// Bubble sort - A sorting algorithm where the largest values bubble up to the top
+/////////////////////////////////
+// Bubble sort - A sorting algorithm where the largest values bubbles up to the top
 // Example
 function swap(arr, idx1, idx2) {
   var temp = arr[idx1];
@@ -320,4 +321,89 @@ function bubbleSort(arr) {
   }
   return arr;
 }
-console.log(bubbleSort([37, 45, 29, 8]));
+// console.log(bubbleSort([37, 45, 29, 8]));
+// Time complexity 0(n**2)
+// Space complexity 0(1)
+
+/////////////////////////////////
+// Selection Sort - Similar to bubble sort, but instead of first placing large values into sorted position, it places small values into sorted position
+// Example
+
+function selectionSort(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    var min = i;
+    for (var j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[min]) {
+        min = j;
+      }
+    }
+    var temp = arr[i];
+    arr[i] = arr[min];
+    arr[min] = temp;
+  }
+  return arr;
+}
+// console.log(selectionSort([24, 22, 10, 19, 17]));
+// Time complexity 0(n**2)
+// Space complexity 0(1)
+
+/////////////////////////////////
+// Insertion Sort - Builds up the sort by gradually creating a larger left half which is always sorted
+// Example
+
+function insertionSort(arr) {
+  for (var i = 1; i < arr.length; i++) {
+    var currentVal = arr[i];
+    for (var j = i - 1; j >= 0 && arr[j] > currentVal; j--) {
+      arr[j + 1] = arr[j];
+    }
+    arr[j + 1] = currentVal;
+  }
+  return arr;
+}
+// console.log(insertionSort([2, 1, 9, 76, 4]));
+// Time complexity 0(n**2)
+// Space complexity 0(1)
+
+/////////////////////////////////
+// Merge Sort
+// Example for Merge
+
+function merge(arr1, arr2) {
+  let results = [];
+  let i = 0;
+  let j = 0;
+  while (i < arr1.length && j < arr2.length) {
+    if (arr2[j] > arr1[i]) {
+      results.push(arr1[i]);
+      i++;
+    } else {
+      results.push(arr2[j]);
+      j++;
+    }
+  }
+  while (i < arr1.length) {
+    results.push(arr1[i]);
+    i++;
+  }
+  while (j < arr1.length) {
+    results.push(arr2[j]);
+    j++;
+  }
+  return results;
+}
+console.log(merge([1, 10, 50], [2, 14, 99, 100]));
+
+// Example for MergeSort
+
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr;
+  let mid = Math.floor(arr.length / 2);
+  let left = mergeSort(arr.slice(0, mid));
+  let right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
+console.log(mergeSort([24, 10, 76, 73]));
+
+// Time complexity 0(n*log n)
+// Space complexity 0(n)
