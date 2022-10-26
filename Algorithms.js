@@ -407,3 +407,6 @@ console.log(mergeSort([24, 10, 76, 73]));
 
 // Time complexity 0(n*log n)
 // Space complexity 0(n)
+
+/////////////////////////////////
+// Quick Sort
