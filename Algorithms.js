@@ -221,7 +221,7 @@ function factorial(num) {
   return num * factorial(num - 1);
 }
 // console.log(factorial(4));
-*/
+
 
 /////////////////////////////////
 // Searching Algorithm
@@ -409,4 +409,128 @@ console.log(mergeSort([24, 10, 76, 73]));
 // Space complexity 0(n)
 
 /////////////////////////////////
-// Quick Sort   
+// Quick Sort
+
+// Example - Pivot Helper Implementation
+function pivot(arr, start = 0, end = arr.length + 1) {
+  function swap(array, i, j) {
+    var temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  var pivot = [arr[start]];
+  var swapIdx = start;
+
+  for (var i = start + 1; i < arr.length; i++) {
+    if (pivot > arr[i]) {
+      swapIdx++;
+      swap(arr, swapIdx, i);
+    }
+  }
+  swap(arr, start, swapIdx);
+  return swapIdx;
+}
+console.log(pivot([4, 8, 2, 1, 5, 7, 6, 3]));
+
+// Example - Quick Sort Implementation
+
+function quickSort(arr, left = 0, right = arr.length - 1) {
+  if (left < right) {
+    let pivotIndex = pivot(arr, left, right);
+    // left
+    quickSort(arr, left, pivotIndex - 1);
+    // right
+    quickSort(arr, pivotIndex + 1, right);
+  }
+  return arr;
+}
+console.log(quickSort([4, 6, 9, 1, 2, 5, 3]));
+
+// Time complexity 0(n*log n)
+// Space complexity 0(n)
+
+/////////////////////////////////
+// Radix Sort - Special sorting algorithm that works on lists of numbers, never makes comparisons between elements, exploits the fact that information about the size of a number is encoded in the number of digits.
+
+// Example: Helper Methods
+
+function getDigit(num, i) {
+  return Math.floor(Math.abs(num) / Math.pow(10, i)) % 10;
+}
+// console.log(getDigit(7323, 2));
+
+function digitCount(num) {
+  if (num === 0) return 1;
+  return Math.floor(Math.log10(Math.abs(num))) + 1;
+}
+
+// console.log(digitCount(7323354));
+
+function mostDigits(nums) {
+  let maxDigits = 0;
+  for (let i = 0; i < nums.length; i++) {
+    maxDigits = Math.max(maxDigits, digitCount(nums[i]));
+  }
+  return maxDigits;
+}
+console.log(mostDigits([1, 2, 333, 555432, 654]));
+// Example: Radix Sort
+
+function radixSort(nums) {
+  let maxDigitCount = mostDigits(nums);
+  for (let k = 0; k < maxDigitCount; k++) {
+    let digitBuckets = Array.from({ length: 10 }, () => []);
+    for (let i = 0; i < nums.length; i++) {
+      let digit = getDigit(nums[i], k);
+      digitBuckets[digit].push(nums[i]);
+    }
+    nums = [].concat(...digitBuckets);
+  }
+  return nums;
+}
+console.log(radixSort([23, 345, 45656, 35445, 324]));
+
+// Time complexity 0(nk)
+// Space complexity 0(n+k)
+*/
+
+//////////////////////////////////////////////////////////////////
+// Data Structures - collections of values, the relationships among them, and the functions or operations that can be applied to the data
+
+// Example
+
+class Student {
+  constructor(firstName, lastName, year) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.grade = year;
+    this.tardies = 0;
+    this.scores = [];
+  }
+  fullName() {
+    return `Your full name is ${this.firstName} ${this.lastName}`;
+  }
+  markLate() {
+    this.tardies += 1;
+    if (this.tardies >= 3) {
+      return "You are expelled!";
+    }
+    return `${this.firstName} ${this.lastName} has been late ${this.tardies}`;
+  }
+  addScore(score) {
+    this.scores.push(score);
+    return this.scores;
+  }
+  calculateAverage() {
+    let sum = this.scores.reduce(function (a, b) {
+      return a + b;
+    });
+    return sum / this.scores.length;
+  }
+  static enrollStudents() {
+    return "ENROLLING STUDENTS";
+  }
+}
+
+let firstStudent = new Student("Colt", "Steele", "2");
+let SecondStudent = new Student("Jack", "Steele", 2);
