@@ -541,7 +541,7 @@ let SecondStudent = new Student("Jack", "Steele", 2);
 // Singly Linked Lists - Bunch of nodes that are pointing to other nodes
 // piece of data - val
 // reference to next node - next
-
+/*
 class Node {
   constructor(val) {
     this.val = val;
@@ -673,3 +673,309 @@ list.push(";)");
 // first.next.next = new Node("how");
 // first.next.next.next = new Node("are");
 // first.next.next.next.next = new Node("you");
+*/
+/////////////////////////////////
+// Doubly Linked Lists - Almost identical to Singly Linked Lists, except every node has another pointer, to the previous node!
+// Node: val, next, prev
+// DoublyLinkedList : head,tail,length
+/*
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+    this.prev = null;
+  }
+}
+
+class DoublyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+  push(val) {
+    var newNode = new Node(val);
+    if (this.length === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.tail.next = newNode;
+      newNode.prev = this.tail;
+      this.tail = newNode;
+    }
+    this.length++;
+    return this;
+  }
+  pop() {
+    if (this.length === 0) return undefined;
+    var poppedNode = this.tail;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.tail = poppedNode.prev;
+      this.tail.next = null;
+      poppedNode.prev = null;
+    }
+    this.length--;
+    return poppedNode;
+  }
+  shift() {
+    if (this.length === 0) return undefined;
+    var oldHead = this.head;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = oldHead.next;
+      this.head.prev = null;
+      oldHead.next = null;
+    }
+    this.length--;
+    return oldHead;
+  }
+  unshift(val) {
+    var newNode = new Node(val);
+    if (this.length === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.head.prev = newNode;
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+    this.length++;
+    return this;
+  }
+  get(index) {
+    if (index < 0 || index >= this.length) return null;
+    if (index <= this.length / 2) {
+      var count = 0;
+      var current = this.head;
+      while (count !== index) {
+        current = current.next;
+        count++;
+      }
+    } else {
+      var count = this.length - 1;
+      var current = this.tail;
+      while (count !== index) {
+        current = current.prev;
+        count--;
+      }
+    }
+    return current;
+  }
+  set(index, val) {
+    var foundNode = this.get(index);
+    if (foundNode != null) {
+      foundNode.val = val;
+      return true;
+    }
+    return false;
+  }
+  insert(index, val) {
+    if (index < 0 || index >= this.length) return false;
+    if (index === 0) return !!this.unshift();
+    if (index === this.length) return !!this.push();
+
+    var newNode = new Node(val);
+    var beforeNode = this.get(index - 1);
+    var afterNode = beforeNode.next;
+
+    (beforeNode.next = newNode), (newNode.prev = beforeNode);
+    (newNode.next = afterNode), (afterNode.prev = newNode);
+    this.length--;
+    return true;
+  }
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined;
+    if (index === 0) this.shift();
+    if (index === this.length - 1) this.pop();
+    var removedNode = this.get(index);
+    var beforeNode = removedNode.prev;
+    var afterNode = removedNode.next;
+    beforeNode.next = afterNode;
+    afterNode.prev = beforeNode;
+
+    removedNode.next = null;
+    removedNode.prev = null;
+    this.length--;
+    return removedNode;
+  }
+}
+*/
+/////////////////////////////////
+// Stacks and Queues
+// Stacks - The last element added to the stack will be the first element removed from the stack
+/*
+var stack = [];
+stack.push("google");
+
+stack.push("instagram");
+
+stack.push("youtube");
+
+stack.pop();
+
+console.log(stack);
+*/
+// LIFO - Last in, First out
+/*
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+class Stack {
+  constructor() {
+    this.first = null;
+    this.last = null;
+    this.size = 0;
+  }
+  push(val) {
+    var newNode = new Node(val);
+    if (!this.first) {
+      this.first = newNode;
+      this.last = newNode;
+    } else {
+      var temp = this.first;
+      this.first = newNode;
+      this.first.next = temp;
+    }
+    return ++this.size;
+  }
+  pop() {
+    if (!this.first) return null;
+    var temp = this.first;
+    if (this.first === this.last) {
+      this.last = null;
+    }
+    this.first = this.first.next;
+    this.size--;
+
+    return temp.value;
+  }
+}
+*/
+// Queues - The first element added to the stack will be the first element removed from the stack
+/*
+var q = [];
+q.push("First");
+q.push("Second");
+q.push("Third");
+
+q.shift();
+
+console.log(q);
+*/
+/*
+class Queue {
+  constructor() {
+    this.first = null;
+    this.last = null;
+    this.size = 0;
+  }
+}
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+  enqueue(val) {
+    var newNode = new Node(val);
+    if (!this.first) {
+      this.first = newNode;
+      this.last = newNode;
+    } else {
+      this.last.next = newNode;
+      this.last = newNode;
+    }
+    return ++this.size;
+  }
+  dequeue() {
+    if (!this.first) return null;
+    var temp = this.first;
+    if (this.first === this.last) {
+      this.last = null;
+    }
+    this.first = this.first.next;
+    this.size--;
+    return temp.value;
+  }
+}
+*/
+/////////////////////////////////
+// Trees - A data structure that consists of nodes in a parent/child relationship
+
+// Root - Top node in a tree
+// Child - A node directly connected to another node when moving away from the Root
+// Parent - The converse notion of a child.
+// Siblings - A group of nodes with the same parent
+// Leaf - A node with no children
+// Edge - The connection between nodes
+
+// Use cases: HTML DOM, Network Routing, Artificial Intelligence, Folders in Operating Systems
+
+// Binary Search Trees - Maximum of 2 children per node. To the left,less than the parent.To the right, more than the parent.
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+  insert(value) {
+    var newNode = new Node(value);
+    if (this.root === null) {
+      this.root = newNode;
+      return this;
+    } else {
+      var current = this.root;
+      while (true) {
+        if (value === current.value) return undefined;
+        if (value < current.value) {
+          if (current.left === null) {
+            current.left = newNode;
+            return this;
+          } else {
+            current = current.left;
+          }
+        } else if (value > current.value) {
+          if (current.right === null) {
+            current.right = newNode;
+            return this;
+          } else {
+            current = current.right;
+          }
+        }
+      }
+    }
+  }
+  find(value) {
+    if (this.root === null) return false;
+    var current = this.root,
+      found = false;
+    while (current && !found) {
+      if (value < current.value) {
+        current = current.left;
+      } else if (value > current.value) {
+        current = current.right;
+      } else {
+        found = true;
+      }
+    }
+    if (!found) return undefined;
+    return current;
+  }
+}
+// var tree = new BinarySearchTree();
+// tree.root = new Node(10);
+// tree.root.right = new Node(15);
+// tree.root.left = new Node(7);
+// tree.root.left.right = new Node(9);
