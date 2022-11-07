@@ -973,9 +973,109 @@ class BinarySearchTree {
     if (!found) return undefined;
     return current;
   }
+  // Tree Traversal
+  // Breadth-first Search
+  BFS() {
+    var data = [],
+      queue = [],
+      node = this.root;
+
+    queue.push(this.root);
+    while (queue.length) {
+      node = queue.shift();
+      data.push(node.value);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    return data;
+  }
+  // Depth-first Search
+  DFSPreorder() {
+    var data = [];
+    function traverse(node) {
+      data.push(node.value);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+    traverse(this.root);
+    return data;
+  }
+  DFSPostorder() {
+    var data = [];
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      data.push(node.value);
+    }
+    traverse(this.root);
+    return data;
+  }
+  DFSInorder() {
+    var data = [];
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      data.push(node.value);
+      if (node.right) traverse(node.right);
+    }
+    traverse(this.root);
+    return data;
+  }
 }
-// var tree = new BinarySearchTree();
-// tree.root = new Node(10);
-// tree.root.right = new Node(15);
-// tree.root.left = new Node(7);
-// tree.root.left.right = new Node(9);
+
+/////////////////////////////////
+// Heaps - A very similar to a binary search tree, but with some different rules
+// MaxBinaryHeap, parent nodes are always larger than child nodes
+// MinBinaryHeapm parent nodes are alwasys smaller than child nodes
+
+class MaxBinaryHeap {
+  constructor() {
+    this.values = [41, 39, 33, 18, 27, 12];
+  }
+  // Insert
+  insert(element) {
+    this.values.push(element);
+    this.bubbleUp();
+  }
+  bubbleUp() {
+    let idx = this.values.length - 1;
+    const element = this.values[idx];
+    while (idx > 0) {
+      let parentIdx = Math.floor(idx - 1 / 2);
+      let parent = this.values[parentIdx];
+      if (element <= parent) break;
+      this.values[parentIdx] = element;
+      this.values[idx] = parent;
+      idx = parentIdx;
+    }
+  }
+  // Extract
+  extractMax() {
+    const max = this.values[0];
+    const end = this.values.pop();
+    this.values[0] = end;
+    this.sinkDown();
+    return max;
+  }
+  sinkDown() {
+    let idx = 0;
+    const length = this.values.length;
+    const element = this.values[0];
+    while (true) {
+      let leftChildIdx = 2 * idx + 1;
+      let leftRightIdx = 2 * idx + 2;
+      let leftChild, rightChild;
+      let swap = null;
+
+      if (leftChildIdx < length) {
+        leftChild = this.values[leftChildIdx];
+        if (leftChild > element) {
+          swap = leftChildIdx;
+        }
+      }
+
+      if (swap === null) break;
+    }
+  }
+}
+let heap = new MaxBinaryHeap();
+heap.insert(55);
